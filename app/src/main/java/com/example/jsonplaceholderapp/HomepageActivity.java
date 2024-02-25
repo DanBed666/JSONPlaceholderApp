@@ -18,6 +18,7 @@ public class HomepageActivity extends AppCompatActivity
     Button todos;
     Button my_profile;
     Button logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -30,6 +31,15 @@ public class HomepageActivity extends AppCompatActivity
         todos = findViewById(R.id.btn_todos);
         my_profile = findViewById(R.id.btn_myprofile);
         logout = findViewById(R.id.btn_logout);
+
+        posts.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(getApplicationContext(), PostsActivity.class));
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener()
         {
