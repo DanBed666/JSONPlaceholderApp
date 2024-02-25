@@ -12,41 +12,41 @@ import android.os.Bundle;
 import java.util.List;
 import java.util.Objects;
 
-public class PostsActivity extends AppCompatActivity
+public class AlbumsActivity extends AppCompatActivity
 {
     RecyclerView recyclerView;
-    PostsViewModel postsViewModel;
-    PostsAdapter postsAdapter;
+    AlbumsViewModel albumsViewModel;
+    AlbumsAdapter albumsAdapter;
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_posts);
+        setContentView(R.layout.activity_albums);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerViewAlbums);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         dividerItemDecoration.setDrawable(Objects.requireNonNull(getDrawable(R.drawable.divider)));
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        postsViewModel = new PostsViewModel();
+        albumsViewModel = new AlbumsViewModel();
 
-        getPosts();
+        getAlbums();
     }
 
-    public void getPosts()
+    public void getAlbums()
     {
-        postsViewModel.getPostsVm().observeForever(new Observer<List<Post>>()
+        albumsViewModel.getAlbumsVm().observeForever(new Observer<List<Album>>()
         {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onChanged(List<Post> posts)
+            public void onChanged(List<Album> albums)
             {
-                postsAdapter = new PostsAdapter(getApplicationContext(), posts);
-                recyclerView.setAdapter(postsAdapter);
-                postsAdapter.notifyDataSetChanged();
+                albumsAdapter = new AlbumsAdapter(albums, getApplicationContext());
+                recyclerView.setAdapter(albumsAdapter);
+                albumsAdapter.notifyDataSetChanged();
             }
         });
     }

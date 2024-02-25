@@ -11,4 +11,7 @@ public interface RetrofitService
 
     @GET("posts")
     Call<List<Post>> getPostsList();
+
+    @GET("albums")
+    Call<List<Album>> getAlbumsList();
 }
