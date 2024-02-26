@@ -36,4 +36,26 @@ public class AlbumsRepository
 
         return mutableLiveData;
     }
+
+    public MutableLiveData<List<Photo>> getPhotosRepo(int albumId)
+    {
+        MutableLiveData<List<Photo>> mutableLiveData = new MutableLiveData<>();
+
+        RetrofitBuilder.getRetrofitService().getPhotosList(albumId).enqueue(new Callback<List<Photo>>()
+        {
+            @Override
+            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response)
+            {
+                mutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Photo>> call, Throwable t)
+            {
+
+            }
+        });
+
+        return mutableLiveData;
+    }
 }

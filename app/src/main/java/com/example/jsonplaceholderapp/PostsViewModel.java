@@ -15,4 +15,8 @@ public class PostsViewModel
     {
         return postsRepository.getPostsRepo();
     }
+    public MutableLiveData<List<Comment>> getCommentsVm(int postId)
+    {
+        return postsRepository.getCommentsRepo(postId);
+    }
 }

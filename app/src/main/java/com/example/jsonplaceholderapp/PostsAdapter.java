@@ -1,10 +1,14 @@
 package com.example.jsonplaceholderapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,10 +33,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         holder.title.setText(postsList.get(position).getTitle());
         holder.content.setText(postsList.get(position).getBody());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context, CommentsActivity.class);
+                int postId = postsList.get(position).getId();
+                intent.putExtra("POST_ID", postId);
+                Log.i("ID", String.valueOf(postId));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

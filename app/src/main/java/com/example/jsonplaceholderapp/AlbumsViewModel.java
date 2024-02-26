@@ -15,4 +15,8 @@ public class AlbumsViewModel
     {
         return albumsRepository.getAlbumsRepo();
     }
+    public MutableLiveData<List<Photo>> getPhotosVm(int albumId)
+    {
+        return albumsRepository.getPhotosRepo(albumId);
+    }
 }

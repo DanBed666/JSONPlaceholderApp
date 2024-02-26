@@ -36,4 +36,26 @@ public class PostsRepository
 
         return mutableLiveData;
     }
+
+    public MutableLiveData<List<Comment>> getCommentsRepo(int postId)
+    {
+        MutableLiveData<List<Comment>> mutableLiveData = new MutableLiveData<>();
+
+        RetrofitBuilder.getRetrofitService().getCommentsList(postId).enqueue(new Callback<List<Comment>>()
+        {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response)
+            {
+                mutableLiveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t)
+            {
+
+            }
+        });
+
+        return mutableLiveData;
+    }
 }
