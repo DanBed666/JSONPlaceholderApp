@@ -1,6 +1,8 @@
 package com.example.jsonplaceholderapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +32,21 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumsViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull AlbumsViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         holder.title.setText(albumsList.get(position).getTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context, PhotosActivity.class);
+                int albumId = albumsList.get(position).getId();
+                intent.putExtra("ALBUM_ID", albumId);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
