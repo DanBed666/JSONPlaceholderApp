@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -19,10 +20,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 {
     Context context;
     List<Post> postsList;
+    UsersViewModel usersViewModel;
     public PostsAdapter(Context c, List<Post> posts)
     {
         context = c;
         postsList = posts;
+        usersViewModel = new UsersViewModel();
     }
     @NonNull
     @Override
@@ -37,6 +40,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     {
         holder.title.setText(postsList.get(position).getTitle());
         holder.content.setText(postsList.get(position).getBody());
+
+        usersViewModel.getUserVm(postsList.get(position).getUserId()).observeForever(new Observer<User>()
+        {
+            @Override
+            public void onChanged(User user)
+            {
+                Log.i("DUPA", String.valueOf(user));
+                holder.user.setText(user.getUsername());
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
@@ -60,12 +73,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
     public static class PostViewHolder extends RecyclerView.ViewHolder
     {
+        TextView user;
         TextView title;
         TextView content;
         public PostViewHolder(@NonNull View itemView)
         {
             super(itemView);
 
+            user = itemView.findViewById(R.id.tv_user);
             title = itemView.findViewById(R.id.tv_title);
             content = itemView.findViewById(R.id.tv_content);
         }

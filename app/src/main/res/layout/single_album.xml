@@ -6,9 +6,19 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        android:textColor="#0000ff"/>
+
+    <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Title"
         android:textSize="28dp"
         android:textStyle="bold"

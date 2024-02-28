@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,10 +18,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
 {
     List<Album> albumsList;
     Context context;
+    UsersViewModel usersViewModel;
     public AlbumsAdapter(List<Album> a, Context c)
     {
         albumsList = a;
         context = c;
+        usersViewModel = new UsersViewModel();
     }
 
     @NonNull
@@ -35,6 +38,14 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
     public void onBindViewHolder(@NonNull AlbumsViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         holder.title.setText(albumsList.get(position).getTitle());
+        usersViewModel.getUserVm(albumsList.get(position).getUserId()).observeForever(new Observer<User>()
+        {
+            @Override
+            public void onChanged(User user)
+            {
+                holder.user.setText(user.getUsername());
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
@@ -57,10 +68,12 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
 
     public static class AlbumsViewHolder extends RecyclerView.ViewHolder
     {
+        TextView user;
         TextView title;
         public AlbumsViewHolder(@NonNull View itemView)
         {
             super(itemView);
+            user = itemView.findViewById(R.id.tv_user);
             title = itemView.findViewById(R.id.tv_title);
         }
     }

@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,7 +35,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosView
     @Override
     public void onBindViewHolder(@NonNull PhotosViewHolder holder, int position)
     {
-        holder.title.setText(photosList.get(position).getUrl());
+        holder.title.setText(photosList.get(position).getTitle());
+        Picasso.get().load(photosList.get(position).getUrl()).resize(150, 150).into(holder.imageView);
     }
 
     @Override
@@ -44,10 +48,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosView
     public static class PhotosViewHolder extends RecyclerView.ViewHolder
     {
         TextView title;
+        ImageView imageView;
         public PhotosViewHolder(@NonNull View itemView)
         {
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
+            imageView = itemView.findViewById(R.id.iv_photo);
         }
     }
 }

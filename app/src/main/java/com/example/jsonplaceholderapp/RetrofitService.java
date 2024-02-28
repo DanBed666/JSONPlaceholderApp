@@ -21,6 +21,6 @@ public interface RetrofitService
     @GET("albums/{albumId}/photos")
     Call<List<Photo>> getPhotosList(@Path("albumId") int albumId);
 
-    @GET("user/{id}")
+    @GET("users/{id}")
     Call<User> getUser(@Path("id") int id);
 }

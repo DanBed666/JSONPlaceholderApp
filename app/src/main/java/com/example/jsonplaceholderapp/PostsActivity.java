@@ -50,4 +50,9 @@ public class PostsActivity extends AppCompatActivity
             }
         });
     }
+
+    public void getUser()
+    {
+
+    }
 }
